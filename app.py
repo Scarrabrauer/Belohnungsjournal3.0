@@ -111,6 +111,21 @@ def create_entry(d: date, results: list[str], triggers: list[str], strategies: l
     return " ".join(parts)
 
 
+def format_scenario_option(name: str) -> str:
+    if name == "— Manuell auswählen —":
+        return name
+    results, triggers, strategies = SCENARIOS[name]
+    emoji_result = " ".join(
+        part for part in (
+            "".join(results),
+            "".join(triggers),
+            "".join(strategies),
+        )
+        if part
+    )
+    return f"{name} → {emoji_result}"
+
+
 def dataframe_from_entries() -> pd.DataFrame:
     if not st.session_state.entries:
         return pd.DataFrame(columns=COLUMNS)
@@ -169,6 +184,7 @@ with tab_input:
     st.selectbox(
         "Typische Situation auswählen",
         options=list(SCENARIOS.keys()),
+        format_func=format_scenario_option,
         key="scenario",
         on_change=apply_scenario,
     )
@@ -358,6 +374,13 @@ with tab_help:
         st.markdown("#### Strategie")
         for emoji, label in STRATEGIES.items():
             st.write(f"{emoji} – {label}")
+
+    st.markdown("#### ⚡ Szenario-Shortcuts")
+    st.caption("Die Kurzbefehle setzen Ergebnis, Auslöser und Strategie automatisch.")
+    for name in SCENARIOS:
+        if name == "— Manuell auswählen —":
+            continue
+        st.write(format_scenario_option(name))
 
     st.markdown("#### Standardformat")
     st.code("26.7.2026 🟢🍫 😟 ☕💪", language=None)
