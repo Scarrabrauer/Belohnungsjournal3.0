@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<title>Belohnungsjournal</title>
+<meta name="description" content="Heißhunger tracken, Muster erkennen, bewusster handeln." />
+<meta name="theme-color" content="#225e4a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Journal" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="app-header">
+  <h1>🍫 Belohnungsjournal</h1>
+  <p class="subtitle">Nicht perfekt. Sondern bewusst.</p>
+</header>
+
+<main id="main"></main>
+
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="nav-btn" data-tab="log" aria-current="page">
+    <span class="nav-icon">✍️</span><span>Eintragen</span>
+  </button>
+  <button class="nav-btn" data-tab="history">
+    <span class="nav-icon">📚</span><span>Verlauf</span>
+  </button>
+  <button class="nav-btn" data-tab="report">
+    <span class="nav-icon">📊</span><span>Auswertung</span>
+  </button>
+  <button class="nav-btn" data-tab="settings">
+    <span class="nav-icon">⚙️</span><span>Einstellungen</span>
+  </button>
+</nav>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
