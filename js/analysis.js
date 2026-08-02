@@ -9,7 +9,7 @@ const OK_RESULTS = ["🟢", "⭐", "❤️", "🍎"];
 const TRIGGER_TIPS = {
   "😟": "Stress ist bei dir ein häufiger Auslöser. Probier vor dem Griff zum Essen 3 tiefe Atemzüge oder 5 Minuten frische Luft — der Cortisol-Effekt lässt oft schneller nach als gedacht.",
   "😴": "Müdigkeit verstärkt Heißhunger messbar (mehr Ghrelin). Achte in den nächsten Nächten auf etwas mehr Schlaf und beobachte, ob sich das Muster ändert.",
-  "😐": "Langeweile ist bei dir ein häufiger Auslöser. Leg dir eine feste Alternativ-Aktivität für genau diese Uhrzeit zurecht (Buch, Anruf, Spaziergang) — dagegen hilft ein Ersatz-Reiz, nicht nur Willenskraft.",
+  "😐": "Langeweile ist bei dir ein häufiger Auslöser. Leg dir eine feste Alternativ-Aktivität für genau solche Momente zurecht (Buch, Anruf, Spaziergang) — dagegen hilft ein Ersatz-Reiz, nicht nur Willenskraft.",
   "📺": "Fernsehen ist bei dir oft mit Essen gekoppelt. Versuch, Naschen und Bildschirmzeit bewusst zu entkoppeln, z. B. nur Tee auf dem Sofa.",
   "📱": "Scrollen aktiviert eine ähnliche Belohnungsschleife wie Naschen. Handy testweise in einen anderen Raum legen kann den Automatismus unterbrechen.",
   "🍽️": "Wenn das Abendessen als nicht sättigend empfunden wird, erhöhe Eiweiß und Ballaststoffe (Hülsenfrüchte, Vollkorn, Joghurt/Quark) — das verlängert die Sättigung spürbar.",
@@ -19,7 +19,7 @@ const TRIGGER_TIPS = {
 };
 
 function inPeriod(entry, start, end) {
-  const d = new Date(`${entry.date}T${entry.time || "00:00"}`);
+  const d = new Date(`${entry.date}T00:00`);
   return d >= start && d <= end;
 }
 
@@ -78,30 +78,6 @@ export function successRate(entries) {
   return ok / relevant.length;
 }
 
-export function peakHourWindow(entries) {
-  const slips = entries.filter((e) => hasAny(e.results, SLIP_RESULTS) && e.time);
-  if (slips.length < 3) return null;
-
-  const byHour = new Array(24).fill(0);
-  for (const e of slips) {
-    const h = parseInt(e.time.split(":")[0], 10);
-    if (!Number.isNaN(h)) byHour[h] += 1;
-  }
-
-  let bestStart = 0;
-  let bestCount = -1;
-  for (let h = 0; h < 24; h++) {
-    const c = byHour[h] + byHour[(h + 1) % 24];
-    if (c > bestCount) {
-      bestCount = c;
-      bestStart = h;
-    }
-  }
-  const pct = Math.round((bestCount / slips.length) * 100);
-  if (pct < 35) return null;
-  return { startHour: bestStart, endHour: (bestStart + 2) % 24, count: bestCount, pct };
-}
-
 export function topTrigger(entries) {
   const slips = entries.filter((e) => hasAny(e.results, SLIP_RESULTS));
   const counts = {};
@@ -151,13 +127,6 @@ export function buildRecommendations(entries, period) {
   }
 
   const tips = [];
-
-  const window = peakHourWindow(current);
-  if (window) {
-    tips.push(
-      `Deine Ausrutscher häufen sich zwischen ${window.startHour}–${(window.endHour) === 0 ? 24 : window.endHour} Uhr (${window.pct}% aller Ausrutscher in diesem Zeitraum). Plane für genau dieses Zeitfenster bewusst eine Alternative ein.`
-    );
-  }
 
   const trigger = topTrigger(current);
   if (trigger && TRIGGER_TIPS[trigger.emoji]) {

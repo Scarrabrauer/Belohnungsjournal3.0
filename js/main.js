@@ -1,7 +1,7 @@
 import {
   RESULTS, TRIGGERS, STRATEGIES, SCENARIOS,
   loadEntries, saveEntries, upsertEntry, deleteEntry, mergeEntries,
-  makeEntry, formatEntryLine, formatDateDE, todayISO, nowHM,
+  makeEntry, formatEntryLine, formatDateDE, yesterdayISO, shiftDateISO,
 } from "./data.js";
 import {
   filterByPeriod, computeStats, successRate, buildRecommendations,
@@ -17,8 +17,7 @@ const state = {
   reportPeriod: "week",
   form: {
     editingId: null,
-    date: todayISO(),
-    time: nowHM(),
+    date: yesterdayISO(),
     results: [],
     triggers: [],
     strategies: [],
@@ -59,8 +58,7 @@ document.getElementById("bottom-nav").addEventListener("click", (e) => {
 function resetForm() {
   state.form = {
     editingId: null,
-    date: todayISO(),
-    time: nowHM(),
+    date: yesterdayISO(),
     results: [],
     triggers: [],
     strategies: [],
@@ -84,7 +82,7 @@ function previewLine() {
   const f = state.form;
   if (!f.results.length) return "";
   return formatEntryLine({
-    date: f.date, time: f.time, results: f.results,
+    date: f.date, results: f.results,
     triggers: f.triggers, strategies: f.strategies, note: f.note,
   });
 }
@@ -92,19 +90,16 @@ function previewLine() {
 function renderLog() {
   const f = state.form;
   main.innerHTML = `
-    <h2>Datum & Uhrzeit</h2>
+    <h2>Datum</h2>
     <div class="card">
-      <div class="row" style="margin-bottom:8px;">
+      <div class="row">
+        <button type="button" class="icon-btn" id="btn-day-prev" title="Einen Tag zurück">←</button>
         <div style="flex:1;">
-          <label class="field-label">Datum</label>
           <input type="date" id="f-date" value="${f.date}" />
         </div>
-        <div style="flex:1;">
-          <label class="field-label">Uhrzeit</label>
-          <input type="time" id="f-time" value="${f.time}" />
-        </div>
+        <button type="button" class="icon-btn" id="btn-day-next" title="Einen Tag vor">→</button>
       </div>
-      <button type="button" class="btn btn-secondary" id="btn-now">🕗 Jetzt</button>
+      <p class="small-note" style="margin-top:8px;">Standardmäßig gestern voreingestellt, weil rückblickend eingetragen wird.</p>
     </div>
 
     <h2>Szenario-Shortcut</h2>
@@ -143,13 +138,12 @@ function renderLog() {
     state.form.date = e.target.value;
     renderLog();
   });
-  document.getElementById("f-time").addEventListener("change", (e) => {
-    state.form.time = e.target.value;
+  document.getElementById("btn-day-prev").addEventListener("click", () => {
+    state.form.date = shiftDateISO(state.form.date, -1);
     renderLog();
   });
-  document.getElementById("btn-now").addEventListener("click", () => {
-    state.form.date = todayISO();
-    state.form.time = nowHM();
+  document.getElementById("btn-day-next").addEventListener("click", () => {
+    state.form.date = shiftDateISO(state.form.date, 1);
     renderLog();
   });
   document.getElementById("f-scenario").addEventListener("change", (e) => {
@@ -205,7 +199,7 @@ function saveCurrentEntry() {
   }
   const entry = makeEntry({
     id: f.editingId,
-    date: f.date, time: f.time,
+    date: f.date,
     results: f.results, triggers: f.triggers, strategies: f.strategies,
     scenario: f.scenario === "— Manuell auswählen —" ? "" : f.scenario,
     note: f.note,
@@ -219,7 +213,7 @@ function saveCurrentEntry() {
 }
 
 function renderHistory() {
-  const sorted = [...state.entries].sort((a, b) => `${b.date}T${b.time}`.localeCompare(`${a.date}T${a.time}`));
+  const sorted = [...state.entries].sort((a, b) => b.date.localeCompare(a.date));
   const byDate = new Map();
   for (const e of sorted) {
     const list = byDate.get(e.date) || [];
@@ -238,8 +232,7 @@ function renderHistory() {
           ${dayEntries.map((e) => `
             <div class="history-entry" data-id="${e.id}">
               <div>
-                <div class="entry-time">${e.time || ""}</div>
-                <div class="entry-text">${escapeHtml(formatEntryLine(e).replace(`${formatDateDE(e.date)} ${e.time} `, ""))}</div>
+                <div class="entry-text">${escapeHtml(formatEntryLine(e).replace(`${formatDateDE(e.date)} `, ""))}</div>
               </div>
               <div class="entry-actions">
                 <button type="button" class="btn-edit" title="Bearbeiten">✏️</button>
@@ -279,7 +272,6 @@ function renderHistory() {
       state.form = {
         editingId: entry.id,
         date: entry.date,
-        time: entry.time,
         results: [...entry.results],
         triggers: [...entry.triggers],
         strategies: [...entry.strategies],
@@ -323,11 +315,11 @@ function renderHistory() {
 }
 
 function toCsv(entries) {
-  const header = "Datum;Uhrzeit;Ergebnis;Ausloeser;Strategie;Notiz";
+  const header = "Datum;Ergebnis;Ausloeser;Strategie;Notiz";
   const rows = entries
     .slice()
-    .sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`))
-    .map((e) => [formatDateDE(e.date), e.time, e.results.join(""), e.triggers.join(""), e.strategies.join(""), (e.note || "").replace(/;/g, ",")].join(";"));
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .map((e) => [formatDateDE(e.date), e.results.join(""), e.triggers.join(""), e.strategies.join(""), (e.note || "").replace(/;/g, ",")].join(";"));
   return [header, ...rows].join("\n");
 }
 

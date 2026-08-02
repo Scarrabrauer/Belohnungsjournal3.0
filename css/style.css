@@ -232,7 +232,6 @@ label.field-label {
   gap: 8px;
 }
 .history-entry .entry-text { font-size: 0.98rem; }
-.history-entry .entry-time { color: var(--muted); font-size: 0.8rem; }
 .history-entry .entry-actions { display: flex; gap: 4px; flex-shrink: 0; }
 .history-entry .entry-actions button {
   border: none;
