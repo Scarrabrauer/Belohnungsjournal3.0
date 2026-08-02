@@ -1,14 +1,14 @@
 # 🍫 Belohnungsjournal
 
-Ein sehr einfaches Tool, um abendlichen Heißhunger zu tracken, Muster zu erkennen (z. B. eine feste Uhrzeit oder einen wiederkehrenden Auslöser) und daraus konkrete, bewusste Strategien abzuleiten.
+Ein sehr einfaches Tool, um abendlichen Heißhunger zu tracken, Muster zu erkennen (z. B. wiederkehrende Auslöser) und daraus konkrete, bewusste Strategien abzuleiten. Ausgelegt fürs rückblickende Eintragen — das Datum steht standardmäßig auf gestern.
 
 Neu in v3: komplette Neuentwicklung als **installierbare Web-App (PWA)** statt Streamlit — startet auf dem iPhone wie eine echte App, funktioniert offline, synchronisiert optional über dein eigenes GitHub-Repo.
 
 ## Features
 
-- ✍️ **Eintragen**: Ergebnis / Auslöser / Strategie per Emoji-Chips, plus Szenario-Shortcuts, Datum & Uhrzeit
+- ✍️ **Eintragen**: Ergebnis / Auslöser / Strategie per Emoji-Chips, plus Szenario-Shortcuts, Datum (Standard: gestern, per ←/→ verschiebbar)
 - 📚 **Verlauf**: alle Einträge, bearbeiten/löschen, Export als JSON/CSV, Import
-- 📊 **Auswertung**: Kennzahlen pro Woche/Monat/gesamt, häufigste Auslöser, wirksamste Strategien, **regelbasierte Empfehlungen** (z. B. Zeitfenster-Erkennung, wenn sich Ausrutscher zu einer bestimmten Uhrzeit häufen)
+- 📊 **Auswertung**: Kennzahlen pro Woche/Monat/gesamt, häufigste Auslöser, wirksamste Strategien, **regelbasierte Empfehlungen** (häufigster Auslöser, wirksamste Strategie, aktuelle Streak)
 - ⚙️ **Einstellungen**: optionaler Cloud-Sync über die GitHub-API, Legende, Daten löschen
 
 Alles läuft rein im Browser (kein Server, kein Build-Schritt) und funktioniert komplett offline — die Daten liegen lokal auf dem Gerät (`localStorage`) und werden bei Bedarf mit einer JSON-Datei in diesem Repo synchronisiert.
@@ -46,4 +46,4 @@ Der Token wird ausschließlich lokal auf dem Gerät gespeichert (`localStorage`)
 
 ## Warum die Empfehlungen regelbasiert statt KI-generiert sind
 
-Bewusst offline-first und ohne API-Kosten gehalten: Die App erkennt feste Muster (Häufigster Auslöser, Zeitfenster-Häufung, wirksamste Strategie, aktuelle Streak) und verknüpft sie mit vordefinierten, evidenzbasierten Tipps. Das funktioniert überall sofort, ohne Internetverbindung.
+Bewusst offline-first und ohne API-Kosten gehalten: Die App erkennt feste Muster (häufigster Auslöser, wirksamste Strategie, aktuelle Streak) und verknüpft sie mit vordefinierten, evidenzbasierten Tipps. Das funktioniert überall sofort, ohne Internetverbindung.

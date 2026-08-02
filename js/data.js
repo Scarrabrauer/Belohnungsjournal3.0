@@ -98,11 +98,10 @@ export function mergeEntries(local, remote) {
   return Array.from(byId.values());
 }
 
-export function makeEntry({ id, date, time, results, triggers, strategies, scenario, note }) {
+export function makeEntry({ id, date, results, triggers, strategies, scenario, note }) {
   return {
     id: id || uid(),
     date,
-    time,
     results: results || [],
     triggers: triggers || [],
     strategies: strategies || [],
@@ -115,7 +114,6 @@ export function makeEntry({ id, date, time, results, triggers, strategies, scena
 export function formatEntryLine(entry) {
   const parts = [
     formatDateDE(entry.date),
-    entry.time,
     entry.results.join(""),
   ];
   if (entry.triggers.length) parts.push(entry.triggers.join(""));
@@ -129,12 +127,19 @@ export function formatDateDE(isoDate) {
   return `${parseInt(d, 10)}.${parseInt(m, 10)}.${y}`;
 }
 
-export function todayISO() {
-  const d = new Date();
+function toISO(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-export function nowHM() {
+export function yesterdayISO() {
   const d = new Date();
-  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  d.setDate(d.getDate() - 1);
+  return toISO(d);
+}
+
+export function shiftDateISO(isoDate, days) {
+  const [y, m, d] = isoDate.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  date.setDate(date.getDate() + days);
+  return toISO(date);
 }
