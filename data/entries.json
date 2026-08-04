@@ -1,5 +1,20 @@
 [
   {
+    "id": "8a7fd8cf-9a1f-4c59-9a8e-61b4278b56d7",
+    "date": "2026-08-03",
+    "results": [
+      "🔴",
+      "🍟"
+    ],
+    "triggers": [
+      "😴"
+    ],
+    "strategies": [],
+    "scenario": "",
+    "note": "",
+    "updatedAt": "2026-08-04T09:25:11.157Z"
+  },
+  {
     "id": "b33a3fa9-335e-45c2-bc0b-a90cd1ce5529",
     "date": "2026-07-26",
     "results": [
