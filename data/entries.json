@@ -1,5 +1,23 @@
 [
   {
+    "id": "6045bbbf-8932-4dae-b626-20b7df8bea4c",
+    "date": "2026-07-26",
+    "time": "17:50",
+    "results": [
+      "🟢",
+      "🍟"
+    ],
+    "triggers": [
+      "😟"
+    ],
+    "strategies": [
+      "☕"
+    ],
+    "scenario": "",
+    "note": "",
+    "updatedAt": "2026-08-02T15:51:43.554Z"
+  },
+  {
     "id": "8a7fd8cf-9a1f-4c59-9a8e-61b4278b56d7",
     "date": "2026-08-03",
     "results": [
