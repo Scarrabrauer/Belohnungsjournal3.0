@@ -79,5 +79,23 @@
     "scenario": "🔴 Autopilot auf dem Sofa",
     "note": "",
     "updatedAt": "2026-08-05T04:27:02.646Z"
+  },
+  {
+    "id": "02f3931b-d985-4036-9f97-b319b2a3f07f",
+    "date": "2026-08-05",
+    "results": [
+      "❤️",
+      "🟢"
+    ],
+    "triggers": [
+      "😴",
+      "👥"
+    ],
+    "strategies": [
+      "☕"
+    ],
+    "scenario": "",
+    "note": "",
+    "updatedAt": "2026-08-05T20:03:48.393Z"
   }
 ]
