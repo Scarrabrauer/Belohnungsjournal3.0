@@ -1,23 +1,5 @@
 [
   {
-    "id": "6045bbbf-8932-4dae-b626-20b7df8bea4c",
-    "date": "2026-07-26",
-    "time": "17:50",
-    "results": [
-      "🟢",
-      "🍟"
-    ],
-    "triggers": [
-      "😟"
-    ],
-    "strategies": [
-      "☕"
-    ],
-    "scenario": "",
-    "note": "",
-    "updatedAt": "2026-08-02T15:51:43.554Z"
-  },
-  {
     "id": "8a7fd8cf-9a1f-4c59-9a8e-61b4278b56d7",
     "date": "2026-08-03",
     "results": [
@@ -31,21 +13,6 @@
     "scenario": "",
     "note": "",
     "updatedAt": "2026-08-04T09:25:11.157Z"
-  },
-  {
-    "id": "2f0f5f88-377a-4a28-b5ac-5d6fb8f4cbab",
-    "date": "2026-07-27",
-    "results": [
-      "🔴",
-      "🍟"
-    ],
-    "triggers": [
-      "🍺"
-    ],
-    "strategies": [],
-    "scenario": "",
-    "note": "",
-    "updatedAt": "2026-08-02T16:01:26.893Z"
   },
   {
     "id": "b33a3fa9-335e-45c2-bc0b-a90cd1ce5529",
@@ -63,5 +30,54 @@
     "scenario": "",
     "note": "",
     "updatedAt": "2026-08-02T16:00:37.192Z"
+  },
+  {
+    "id": "2f0f5f88-377a-4a28-b5ac-5d6fb8f4cbab",
+    "date": "2026-07-27",
+    "results": [
+      "🔴",
+      "🍟"
+    ],
+    "triggers": [
+      "🍺"
+    ],
+    "strategies": [],
+    "scenario": "",
+    "note": "",
+    "updatedAt": "2026-08-02T16:01:26.893Z"
+  },
+  {
+    "id": "00097ce5-d131-4387-b49d-1213bce6ef4c",
+    "date": "2026-08-04",
+    "results": [
+      "🔴",
+      "🍟"
+    ],
+    "triggers": [
+      "📺",
+      "😴"
+    ],
+    "strategies": [],
+    "scenario": "🔴 Autopilot auf dem Sofa",
+    "note": "",
+    "updatedAt": "2026-08-05T04:27:02.646Z"
+  },
+  {
+    "id": "6045bbbf-8932-4dae-b626-20b7df8bea4c",
+    "date": "2026-07-26",
+    "time": "17:50",
+    "results": [
+      "🟢",
+      "🍟"
+    ],
+    "triggers": [
+      "😟"
+    ],
+    "strategies": [
+      "☕"
+    ],
+    "scenario": "",
+    "note": "",
+    "updatedAt": "2026-08-02T15:51:43.554Z"
   }
 ]
